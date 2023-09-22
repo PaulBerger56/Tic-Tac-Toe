@@ -4,14 +4,23 @@ const GameBoard = (() => {
     const render  = () => {
         let boardHTML = "";
         gameboard.forEach((square, index) => {
-            boardHTML += `<div class="square" id=square-${index}">${square}</div>`
+            boardHTML += `<div class="square" id="square-${index}">${square}</div>`
         })
-        document.querySelector("#gameboard").innerHTML = boardHTML;
-    }
-    
+        document.querySelector("#gameboard").innerHTML = boardHTML;  
+        const squares = document.querySelectorAll(".square");
+        squares.forEach((square) => {
+            square.addEventListener("click", Game.handleClick);
+        })    
+    }    
+
+    const update = (index, value) => {
+        gameboard[index] = value;
+        render();
+    };
 
     return {
-        render,
+        render,  
+        update      
     }
 })();
 
@@ -34,10 +43,20 @@ const Game = (() => {
         ]
         currentPlayerIndex = 0;
         gameOver = false;
-        GameBoard.render();
+        GameBoard.render();        
     }
+
+    const handleClick = (event) => {
+        let index = parseInt(event.target.id.split("-")[1]);
+        GameBoard.update(index, players[currentPlayerIndex].mark);
+
+        currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+    }
+
     return {
         start,
+        handleClick,
+        
     }
     
 })();
