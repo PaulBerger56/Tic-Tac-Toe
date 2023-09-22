@@ -86,13 +86,15 @@ const Game = (() => {
             Gameboard.update(i, "");
         }
         Gameboard.render();
+        gameOver = false;
+        currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+        document.querySelector("#message").innerHTML = "";
     }
 
     return {
         start,
         handleClick,
-        restart
-        
+        restart        
     }
     
 })();
