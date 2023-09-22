@@ -54,18 +54,31 @@ const Game = (() => {
         let index = parseInt(event.target.id.split("-")[1]);
         if(Gameboard.getGameboard()[index] !=="")
             return;
-        
+
         Gameboard.update(index, players[currentPlayerIndex].mark);     
         currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+    }
+
+    const restart = () => {
+        for(let i = 0; i < 9; i++) {
+            Gameboard.update(i, "");
+        }
+        Gameboard.render();
     }
 
     return {
         start,
         handleClick,
+        restart
         
     }
     
 })();
+
+const restartButton = document.querySelector("#restart-button");
+restartButton.addEventListener("click", () => {
+    Game.restart();
+})
 
 const startButton = document.querySelector("#start-button");
 startButton.addEventListener("click", ()=> {
