@@ -1,4 +1,4 @@
-const GameBoard = (() => {
+const Gameboard = (() => {
     let gameboard = ["", "", "", "", "", "", "", "", ""] 
 
     const render  = () => {
@@ -18,9 +18,13 @@ const GameBoard = (() => {
         render();
     };
 
+
+    const getGameboard = () => gameboard;
+
     return {
         render,  
-        update      
+        update,
+        getGameboard      
     }
 })();
 
@@ -43,13 +47,15 @@ const Game = (() => {
         ]
         currentPlayerIndex = 0;
         gameOver = false;
-        GameBoard.render();        
+        Gameboard.render();        
     }
 
     const handleClick = (event) => {
         let index = parseInt(event.target.id.split("-")[1]);
-        GameBoard.update(index, players[currentPlayerIndex].mark);
-
+        if(Gameboard.getGameboard()[index] !=="")
+            return;
+        
+        Gameboard.update(index, players[currentPlayerIndex].mark);     
         currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
     }
 
